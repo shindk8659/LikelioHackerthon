@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>모해?모여! 내가만든모임~</title>
+
+
+
+    <link href="../stylesheets/bootstrap.css" rel="stylesheet">
+    <link href="../stylesheets/bootstrap.min.css" rel="stylesheet">
+    <link href="../stylesheets/font-awesome.min.css" rel="stylesheet">
+    <link href="../stylesheets/style.css" rel="stylesheet">
+
+    <script src="js/javascript.js"></script>
+  </head>
+  <body>
+    <nav class="navbar-default navbar-inverse navbar-custom navbar-fixed-top"><!--네비게이션-->
+    <div class="container-fluid">
+      <div class="navbar-header">
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand" href="#">모해?모여!</a>
+      </div>
+      <div class="collapse navbar-collapse" id="myNavbar">
+        <ul class="nav navbar-nav">
+          <li><a href="/main">Home</a></li>
+          <li class="active"><a href="/imademeeting">내가만든모임</a></li>
+          <li><a href="/mymeeting">나의모임일정</a></li>
+          <li ><a href="/waitaccept">수락대기모임</a></li>
+          <li><a href="/profilechange">회원정보수정</a></li>
+        </ul>
+        <ul class="nav navbar-nav navbar-right">
+          <li><a href="#"><span class="glyphicon glyphicon-log-out"></span> Logout</a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+      <div id="backcolor"><!--타이틀-->
+          <h1 class="text-center text-white text-title"><br><a style="color:#FA6A5C;">내</a>가<a style="color:#FA6A5C;">만</a>든<a style="color:#FA6A5C;">모</a>임</h1><br>
+
+        </div>
+        <br>
+        <!--여기부터 모임 하나-->
+        <%for(var i=0 ; i < rows.length ; i++){%>
+        <div class=" container-fluid center-block">
+            <div class="col-md-2"></div>
+              <div class=" container-fluid col-md-8  well contentsbox thumbnail" style="margin:1%;">
+                <a href="/meetinginfo_manager/<%=rows[i].bulletin_index%>">
+                  <div class=" col-xs-4 col-lg-4 ">
+                    <div class='square-box well'style="margin-top:20px;">
+                        <div class='square-content'style="background-image: url(https://s3.ap-northeast-2.amazonaws.com/likelionsmu/user_img/default.png); background-size:cover;"></div>
+                    </div>
+                  </div>
+                  <div class="col-xs-8 col-md-8 text-white">
+                    <p style="text-align:left">제목:<%= rows[i].bulletin_title %></p>
+                    <p style="text-align:left">현재 모임 인원:<%= rows[i].bulletin_apply_status %></p>
+                    <p style="text-align:left">날짜:<%= rows[i].bulletin_meeting_date %></p>
+                    <p style="text-align:left">장소:<%= rows[i].bulletin_place %></p>
+                  </div>
+                  </a>
+                </div>
+                <div class="col-md-2"></div>
+              </div>
+              <%}%>
+              <!--여기까지-->
+
+            <br>
+            <div id="backcolor">
+              <br>
+              <br>
+              <br>
+           </div>
+
+            <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+            <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+            <!-- Include all compiled plugins (below), or include individual files as needed -->
+            <script src="../javascripts/bootstrap.min.js"></script>
+            <script src="../javascripts/javascript.js"></script>
+  </body>
+</html>

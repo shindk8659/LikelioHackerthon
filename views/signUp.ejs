@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>모해?모여! 회원가입하자~</title>
+
+
+    <link href="../stylesheets/bootstrap.css" rel="stylesheet">
+    <link href="../stylesheets/bootstrap.min.css" rel="stylesheet">
+    <link href="../stylesheets/font-awesome.min.css" rel="stylesheet">
+    <link href="../stylesheets/style.css" rel="stylesheet">
+
+    <script type="text/javascript">
+    function a(){
+    var f=document.formName;
+    f.action = "/signUpOk";
+    f.method = "post"
+    // 파일 전송이 필요할 경우만 씀.
+    f.submit();
+    }
+    </script>
+    <script type="text/javascript">
+
+              function checkId(){
+                var check=0;
+                var id = document.getElementById("inputID").value;
+                if(id.length == 0   ){
+                  alert("아이디를 입력해주세요.")
+                   return
+                }
+                <%for(var i =0 ; i<rows.length;i++){
+                            var one = rows[i];
+                    %>
+                    if(id=="<%=one.user_id%>"){
+                       check=1;
+                    }
+                <%}%>
+                if(check==1){
+                  alert("아이디가 중복됩니다")
+                }else{
+                  alert("사용가능한 아이디입니다.")
+                }
+              }
+              function chkPwdAgain(){
+                var origin = document.getElementById("inputPassword").value;
+                var check = document.getElementById("inputPasswordcheck").value;
+                if(origin != check){
+                  alert("입력한 비밀번호가 다릅니다.")
+                  document.getElementById("inputPasswordcheck").value = ""
+                  return
+                }
+              }
+              function chkPwd(){
+                var pw = document.getElementById("inputPassword").value;
+                var reg = /^(?=.*[a-zA-Z])(?=.*[!@#$%^*+=-])(?=.*[0.9]).{8,20}/;
+                if(pw.length < 8 || pw.length > 20){
+                  alert("8자리 ~ 20자리 이내로 입력해주세요.");
+                  document.getElementById("inputPassword").value = ""
+                  return;
+                }
+                if(pw.search(/\s/) != -1){
+                  alert("비밀번호는 공백업이 입력해주세요.");
+                  document.getElementById("inputPassword").value = ""
+                  return;
+                }
+                if(reg.test(pw) == false){
+                  alert("형식에 맞춰서 입력해주세요.")
+                  document.getElementById("inputPassword").value = ""
+                  return;
+                }
+                return;
+                }
+
+                function checkName(){
+                  document.getElementById("inputName").style.color='black';
+                  var name = document.getElementById("inputName");
+                  var reg = /^[가-힣]{2,4}|[a-zA-Z]{2,10}\s[a-zA-Z]{2,10}$/;
+                  if(reg.test(name.value) == false){
+                    document.getElementById("inputName").value = "이름 형식이 아닙니다."
+                    document.getElementById("inputName").style.color = "red";
+                    document.addjoin.email.focus();
+              			return;
+                  }
+                }
+
+              function checkAge(){
+                document.getElementById("inputAge").style.color='black';
+                var age = document.getElementById("inputAge");
+                var reg = /^[0-9]+$/;
+                if(reg.test(age.value) == false){
+                  document.getElementById("inputAge").value = "나이 형식이 아닙니다."
+                  document.getElementById("inputAge").style.color = "red";
+                  document.addjoin.email.focus();
+            			return;
+                }
+                if(age.value < 0 || age.value > 100){
+                  document.getElementById("inputAge").value = "올바른 나이가 아닙니다."
+                  document.getElementById("inputAge").style.color = "red";
+                  document.addjoin.email.focus();
+            			return;
+                }
+              }
+
+              function emailcheck(){
+                document.getElementById("inputEmail").style.color='black';
+                var email = document.getElementById("inputEmail");
+            		var exptext = /^[A-Za-z0-9_\.\-]+@[A-Za-z0-9\-]+\.[A-Za-z0-9\-]+/
+            		if(exptext.test(email.value) == false){
+            			//이메일 형식이 알파벳+숫자@알파벳+숫자.알파벳+숫자 형식이 아닐경우
+            			document.getElementById("inputEmail").value  = "이메일 형식이 올바르지 않습니다.";
+                  document.getElementById("inputEmail").style.color = "red";
+            			document.addjoin.email.focus();
+            			return;
+            		}
+                alert("사용 가능한 이메일입니다.");
+              }
+              function phonecheck(){
+                document.getElementById("inputPhone").style.color='black';
+                var phone = document.getElementById("inputPhone");
+            		var exptext = /^\d{3}\d{3,4}\d{4}$/;
+            		if(exptext.test(phone.value) == false){
+            			//이메일 형식이 알파벳+숫자@알파벳+숫자.알파벳+숫자 형식이 아닐경우
+            			document.getElementById("inputPhone").value  = "번호 형식이 올바르지 않습니다.";
+                  document.getElementById("inputPhone").style.color = "red";
+            			document.addjoin.phone.focus();
+            			return;
+            		}
+                alert("인증 되었습니다.");
+              }
+            </script>
+
+  </head>
+  <body>
+
+        <div id="backcolor">
+          <br>
+          <h1 class="text-center text-white text-title"><a style="color:#FA6A5C">회</a>원<a style="color:#FA6A5C">가</a>입</h1>
+          <br>
+        </div>
+        <br>
+        <div class=" container-fluid center-block">
+            <div class="col-md-2"></div>
+              <div class=" container-fluid col-md-8  " style="margin:1%;">
+
+                  <form class="form-horizontal well" method="post" name="formName" id="backcolor" action="/signUpOk">
+                    <div class="row">
+                      <div class="col-xs-4 col-md-4"></div>
+                      <div class="col-xs-4 col-md-4">
+                        <div class='square-box well'>
+                          <div class='square-content'style="background-image: url(https://s3.ap-northeast-2.amazonaws.com/likelionsmu/user_img/default.png); background-size:cover;"></div>
+                        </div>
+                      </div>
+                      <div class="col-xs-4 col-md-4"></div>
+                      </div>
+                      <br>
+
+                  <div class="form-group ">
+                    <label id="addfontcolor"class="col-sm-3 control-label " for="inputEmail">아이디</label>
+                  <div class="col-sm-6">
+                    <input class="form-control" id="inputID" type="text" placeholder="아이디 입력" name="user_id">
+                    <input type="button" name="inputIDcheck" value="확인" onclick="checkId()">
+                  </div>
+                  </div>
+                  <div class="form-group">
+                    <label id="addfontcolor"class="col-sm-3 control-label " for="inputPassword">비밀번호</label>
+                  <div class="col-sm-6">
+                    <input class="form-control" id="inputPassword" type="password" placeholder="비밀번호" name="user_password">
+                  <p id="addfontcolor"class="help-block">숫자, 특수문자 포함 8자 이상</p>
+                  </div>
+                  </div>
+                  <div class="form-group">
+                      <label id="addfontcolor"class="col-sm-3 control-label" for="inputName">이름</label>
+                    <div class="col-sm-6">
+                      <input class="form-control" id="inputName" type="text" placeholder="이름" name="user_name">
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <label id="addfontcolor"class="col-sm-3 control-label" for="inputSex">성별</label>
+                    <div class="col-sm-6">
+                     <select class="form-control" id="inputSex">
+                         <option value="male">남성</option>
+                         <option value="female">여성</option>
+                     </select>
+                   </div>
+                 </div>
+                 <div class="form-group">
+                     <label id="addfontcolor"class="col-sm-3 control-label" for="inputAge">나이</label>
+                   <div class="col-sm-6">
+                     <input class="form-control" id="inputAge" type="text" placeholder="나이" name="user_age">
+                   </div>
+                 </div>
+
+
+                  <div class="form-group">
+                      <label id="addfontcolor"class="col-sm-3 control-label" for="inputNumber">휴대폰번호</label>
+                        <div class="col-sm-6">
+                            <input type="tel" class="form-control" id="inputNumber" placeholder="- 없이 입력해 주세요" name="user_tel"/>
+                        </div>
+                  </div>
+                  <div class="form-group">
+                      <label id="addfontcolor"class="col-sm-3 control-label" for="inputNumber">이메일</label>
+                        <div class="col-sm-6">
+                            <input type="email" class="form-control" id="inputNumber" placeholder="이메일 입력" name="user_email"/>
+                        </div>
+                  </div>
+
+                  <div class="form-group">
+                    <div class="col-sm-12 text-center">
+                      <button id="addcolor" class="btn btn-primary" type="submit">회원가입</i></button>
+                      <a id="addcolor" class="btn btn-danger" type="submit" onclick="/login">가입취소</i></a>
+                    </div>
+                  </div>
+                  </form>
+
+
+              </div>
+
+            </div>
+            <div id="backcolor">
+              <br>
+              <br>
+              <br>
+           </div>
+
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script src="../javascripts/bootstrap.min.js"></script>
+  </body>
+</html>

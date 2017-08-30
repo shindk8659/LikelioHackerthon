@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+    <title>모해?모여! 모임만들기~</title>
+
+
+
+    <link href="/stylesheets/bootstrap.css" rel="stylesheet">
+    <link href="/stylesheets/bootstrap.min.css" rel="stylesheet">
+    <link href="/stylesheets/font-awesome.min.css" rel="stylesheet">
+    <link href="/stylesheets/style.css" rel="stylesheet">
+  
+
+</head>
+  <body onload="initialize1(0, 0)">
+
+
+    <nav class="navbar-default navbar-inverse navbar-custom navbar-fixed-top"><!--네비게이션-->
+    <div class="container-fluid">
+      <div class="navbar-header">
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand" href="/main">모해?모여!</a>
+      </div>
+      <div class="collapse navbar-collapse" id="myNavbar">
+        <ul class="nav navbar-nav">
+          <li><a href="/main">Home</a></li>
+          <li><a href="#">내가만든모임</a></li>
+          <li><a href="#">나의모임일정</a></li>
+          <li ><a href="#">수락대기모임</a></li>
+          <li><a href="/profilechange">회원정보수정</a></li>
+        </ul>
+        <ul class="nav navbar-nav navbar-right">
+          <li><a href="#"><span class="glyphicon glyphicon-log-out"></span> Logout</a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+      <div id="backcolor"><!--타이틀-->
+          <h1 class="text-center text-white text-title"><br><a style="color:#FA6A5C;">모</a>임<a style="color:#FA6A5C;">만</a>들<a style="color:#FA6A5C;">기</a></h1><br>
+            <div class=" container-fluid center-block text-center">
+
+          </div>
+
+        </div>
+        <br>
+        <div class=" container-fluid center-block"> <!--내용-->
+            <div class="col-md-2"></div>
+              <div class=" container-fluid col-md-8  " style="margin:1%;">
+
+                <form class="form-horizontal well" method="post" action="/makemeetingOk">
+                  <script>
+                  alert(asd);
+                  </script>
+                  <input type="hidden" name="bulletin_img"  value="sa">
+                <div class="form-group">
+                  <label id="addfontcolor"class="col-sm-3 control-label" for="inputcategory">모임분류</label>
+                  <div class="col-sm-6">
+                   <select class="form-control" id="category" name="bulletin_category">
+                       <option value=0>영화/뮤지컬/콘서트</option>
+                       <option value=1>밥한끼?</option>
+                       <option value=2>스포츠</option>
+                       <option value=3>스터디/협업</option>
+                       <option value=4>취미생활</option>
+                       <option value=5>지역탐방</option>
+                       <option value=6>게임</option>
+                       <option value=7>야외활동</option>
+                       <option value=8>1시간내 번개</option>
+                   </select>
+                 </div>
+               </div>
+               <div class="form-group">
+                   <label id="addfontcolor"class="col-sm-3 control-label" for="inputmeetingtitle">모임제목</label>
+                 <div class="col-sm-6">
+                   <input class="form-control" id="meetingtitle" type="text" placeholder="내용을 입력해주세요" name="bulletin_title">
+                 </div>
+               </div>
+
+               <div class="form-group">
+                   <label id="addfontcolor"class="col-sm-3 control-label" for="inputmeetingexplain">모임설명</label>
+                 <div class="col-sm-6">
+                   <textarea style="height:100px"class="form-control" id="meetingexplain" placeholder="내용을 입력해주세요" name="bulletin_content"></textarea>
+                 </div>
+               </div>
+
+               <div class="form-group">
+                 <label id="addfontcolor"class="col-sm-3 control-label" for="inputnumber">인원수 (이하)</label>
+                 <div class="col-sm-6">
+                  <select class="form-control" id="inputNum" name="bulletin_apply_limit">
+                      <option value="3">3</option>
+                      <option value="4">4</option>
+                      <option value="5">5</option>
+                      <option value="6">6</option>
+                      <option value="7">7</option>
+                      <option value="8">8</option>
+                      <option value="9">9</option>
+                      <option value="10">10</option>
+                      <option value="11">11</option>
+                      <option value="12">12</option>
+                      <option value="13">13</option>
+                      <option value="14">14</option>
+                      <option value="15">15</option>
+                      <option value="16">16</option>
+                      <option value="17">17</option>
+                      <option value="18">18</option>
+                      <option value="19">19</option>
+                      <option value="20">20</option>
+                      <option value="21">21</option>
+                      <option value="22">22</option>
+                  </select>
+                </div>
+              </div>
+              <div class="form-group">
+                <label id="addfontcolor"class="col-sm-3 control-label" for="inputdate">날짜</label>
+                <div class="col-sm-6">
+                   <input type="date" name="bulletin_meeting_date" value="">
+               </div>
+             </div>
+
+             <div class="form-group">
+               <label id="addfontcolor"class="col-md-3 control-label" for="inputdate" >장소</label>
+               <br>
+               <div id="map_canvas"></div>
+               <br>
+             </div>
+             <div id="control"class="form-group">
+               <input type="hidden" id="markerX" name="bulletin_latitude" value="">
+               <input type="hidden" id="markerY" name="bulletin_longitude" value="">
+               <label id="addfontcolor"class="col-sm-3 control-label " for="inputmeetingexplain">장소검색하기</label>
+               <div class="col-sm-6">
+                <input class="form-control"type="text" id="address" name="bulletin_place" placeholder="장소를 검색해주세요!" >
+              </div>
+              <br>
+              <div class="col-md-12 text-center">
+                <br>
+              <input  id="addcolor" class="btn btn-primary" type="button" value="검색" onClick="codeAddress();">
+            </div>
+          </div>
+             <div class="form-group">
+                 <label id="addfontcolor"class="col-sm-3 control-label" for="inputkakao">오픈카톡</label>
+               <div class="col-sm-6">
+                 <input class="form-control" id="kakao" type="text" placeholder="내용을 입력해주세요" name="bulletin_openchatting">
+               </div>
+             </div>
+                <div class="form-group">
+                  <div class="col-sm-12 text-center">
+                    <button id="addcolor" class="btn btn-primary" type="submit">만들기</i></button>
+                    <a id="addcolor" class="btn btn-danger" type="submit">취소</i></a>
+                  </div>
+                </div>
+                </form>
+              </div>
+
+            </div>
+            <div id="backcolor">
+              <br>
+              <br>
+              <br>
+           </div>
+
+           <script async defer
+           src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDPpTwfj2gY8s2SLi2mOeWEf3Ytqrx6Cmk&callback=initMap">
+           </script>
+
+            <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+
+
+
+            <script src="/javascripts/bootstrap.min.js"></script>
+            <script src="../javascripts/javascript.js"></script>
+
+
+          </body>
+        </html>

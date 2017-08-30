@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>모임정보확인~</title>
+
+
+
+    <link href="../stylesheets/bootstrap.css" rel="stylesheet">
+    <link href="../stylesheets/bootstrap.min.css" rel="stylesheet">
+    <link href="../stylesheets/font-awesome.min.css" rel="stylesheet">
+    <link href="../stylesheets/style.css" rel="stylesheet">
+    <script src="js/javascript.js"></script>
+    <%var one = rows[0];%>
+
+  </head>
+
+  <body onload="initialize3(<%=one.bulletin_latitude%>, <%=one.bulletin_longitude%>)">
+
+    <nav class="navbar-default navbar-inverse navbar-custom navbar-fixed-top"><!--네비게이션-->
+    <div class="container-fluid">
+      <div class="navbar-header">
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand" href="#">모해?모여!</a>
+      </div>
+      <div class="collapse navbar-collapse" id="myNavbar">
+        <ul class="nav navbar-nav">
+          <li><a href="/main">Home</a></li>
+          <li><a href="/imademeeting">내가만든모임</a></li>
+          <li ><a href="/mymetting">나의모임일정</a></li>
+          <li ><a href="#">수락대기모임</a></li>
+          <li><a href="/profilechange">회원정보수정</a></li>
+        </ul>
+        <ul class="nav navbar-nav navbar-right">
+          <li><a href="/logout"><span class="glyphicon glyphicon-log-out"></span> Logout</a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+      <div id="backcolor"><!--타이틀-->
+          <h1 class="text-center text-white text-title"><br><a style="color:#FA6A5C;">모</a>임<a style="color:#FA6A5C;">정</a>보<a style="color:#FA6A5C;">확</a>인</h1><br>
+
+        </div>
+        <br>
+        <div class=" container-fluid center-block"> <!--내용-->
+            <div class="col-md-2"></div>
+              <div class=" container-fluid col-md-8  " style="margin:1%;">
+
+                                    <form class="form-horizontal well" accept-charset="UTF-8" role="form" method="post" action="/enter/<%=one.bulletin_index%>" >
+
+
+                    <div class="row">
+                      <div class="col-xs-4 col-md-4"></div>
+                      <div class="col-xs-4 col-md-4">
+
+                        <div class='square-box well'>
+                          <div class='square-content'style="background-image: url(<%=one.make_img%>); background-size:cover;"></div>
+                        </div>
+                      </div>
+                      <div class="col-xs-4 col-md-4"></div>
+                      </div>
+
+                      <hr>
+                      <label id="addfontcolor"class="col-sm-3 control-label" for="inputName">모임분류</label>
+                      <br>
+                        <p><%=one.bulletin_category%></p>
+                      <hr>
+                      <label id="addfontcolor"class="col-sm-3 control-label" for="inputName">모임제목</label>
+                      <br>
+                        <p><%=one.bulletin_title%></p>
+                      <hr>
+                      <label id="addfontcolor"class="col-sm-3 control-label" for="inputName">모임설명</label>
+                      <br>
+                        <p><%=one.bulletin_content%></p>
+                      <hr>
+                      <label id="addfontcolor"class="col-sm-3 control-label" for="inputName">인원수</label>
+                      <br>
+                        <p><%=one.bulletin_apply_limit%></p>
+                      <hr>
+                      <label id="addfontcolor"class="col-sm-3 control-label" for="inputName">날짜</label>
+                      <br>
+                        <p><%=one.bulletin_meeting_date%></p>
+                      <hr>
+                      <label id="addfontcolor"class="col-sm-3 control-label" for="inputName">장소</label>
+                      <br><br>
+                       <div id="map_canvas"></div>
+
+                      <hr>
+
+
+
+                      <label id="addfontcolor"class="col-sm-3 control-label" >참가인원</label>
+                      <br><br>
+                      <!--여기부터는 참가한 사람 숫자대로 이미지를 띄워주면됨-->
+                      <div class="row">
+                        <% for (var i = 0; i < rows.length; i++) {
+                        var one = rows[i];
+                        if(one.make_id != one.user_id){%>
+
+                        <!--여기부터 한명-->
+                        <div class="col-xs-4 col-md-4">
+
+                          <div class='square-box well'>
+                            <div class='square-content'style="background-image: url(<%=one.user_img%>); background-size:cover;"></div>
+                          </div>
+                        </div>
+                        <!--여기까지-->
+
+                        <%}}%>
+                        </div>
+
+                        <hr>
+                        <div class="form-group">
+                            <label id="addfontcolor"class="col-sm-3 control-label" for="inputName">참가하는 한마디</label>
+                          <div class="col-md-12 col-lg-12">
+                            <input class="form-control" id="inputName" type="text" placeholder="한마디를 적어주세요~" name="user_name">
+                            <br>
+                          </div>
+
+                          <div class="col-md-12 col-lg-12 text-center">
+                            <button id="addcolor" class="btn btn-primary" type="submit">참가하기</button>
+                          </div>
+
+                        </div>
+                </form>
+              </div>
+
+            </div>
+
+            <div id="backcolor">
+              <br>
+              <br>
+              <br>
+           </div>
+
+           <script async defer
+           src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDPpTwfj2gY8s2SLi2mOeWEf3Ytqrx6Cmk&callback=initMap">
+           </script>
+            <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+            <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+            <!-- Include all compiled plugins (below), or include individual files as needed -->
+            <script src="../javascripts/bootstrap.min.js"></script>
+            <script src="../javascripts/javascript.js"></script>
+            </body>
+            </html>

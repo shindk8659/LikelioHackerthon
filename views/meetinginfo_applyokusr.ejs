@@ -1,0 +1,487 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>모해?모여! 모임정보~</title>
+
+
+
+    <link href="../stylesheets/bootstrap.css" rel="stylesheet">
+    <link href="../stylesheets/bootstrap.min.css" rel="stylesheet">
+    <link href="../stylesheets/font-awesome.min.css" rel="stylesheet">
+    <link href="../stylesheets/style.css" rel="stylesheet">
+
+    <script>
+      function a(){
+        alert("모임이 취소되었습니다.");
+      }
+      function b( value1, value2 ){
+      var f =document.post2;
+      f.value1.value = value1;
+      f.value2.value = value2;
+      f.action = "/profileconfirm_usr_2";
+      f.method = "post";
+      f.submit();
+      }
+
+
+      var StreetViewPanorama = new function(){}
+
+    var globalMap;
+    var globalMarker;
+    var globalMarker2;
+    var globalGeocoder;
+
+    // 맵 초기화
+    function initialize1(x, y) {
+
+        if(x==0){ x=37.5662952; }
+        if(y==0){ y=126.97794509999994; }
+
+        globalGeocoder = new google.maps.Geocoder();
+
+        var latlng = new google.maps.LatLng(x, y);
+
+        var myOptions = {
+            zoom: 15,
+            center: latlng,
+            gestureHandling: 'cooperative',
+            streetViewControl: false,
+            scaleControl: false,    // 지도 축적 보여줄 것인지.
+            //scaleControlOptions: { position: google.maps.ControlPosition.TOP_RIGHT },
+            mapTypeId: google.maps.MapTypeId.ROADMAP  // HYBRID, ROADMAP, SATELLITE, TERRAIN
+        };
+
+    globalMap = new google.maps.Map(document.getElementById("map_canvas"), myOptions);
+
+        if (navigator.geolocation) {
+             navigator.geolocation.getCurrentPosition(function(position) {
+
+               globalMarker.setOptions({
+                   map: null,
+                   visible: false
+               });
+
+               globalMarker=null;
+               var pos = {
+                 lat: position.coords.latitude,
+                 lng: position.coords.longitude
+               };
+               globalMarker = new google.maps.Marker({
+                 map: globalMap,
+                 draggable: false,
+                 animation: google.maps.Animation.BOUNCE,
+                 position: pos
+               });
+
+               globalMarker.addListener('click', toggleBounce);
+               globalMap.setCenter(pos);
+             }, function() {
+               handleLocationError(true, globalMarker, map.getCenter());
+             });
+
+           } else {
+
+               handleLocationError(false, globalMarker, map.getCenter());
+
+
+
+           }
+
+
+
+
+    var pos = {
+          lat: 37.5662952,
+          lng: 126.97794509999994
+        };
+          var myOptions2 = {
+              position: pos,
+              draggable: false,
+              map: globalMap,
+              animation: google.maps.Animation.BOUNCE,
+              //icon: "http://sstatic.naver.net/search/img2/ico_bal_a.gif", // 아이콘 설정할 때
+              visible: true
+          };
+
+          globalMarker = new google.maps.Marker(myOptions2);
+          globalMarker.addListener('click', toggleBounce);
+
+
+
+
+    }
+
+    function initialize2(x, y) {
+
+        if(x==0){ x=37.5662952; }
+        if(y==0){ y=126.97794509999994; }
+
+        globalGeocoder = new google.maps.Geocoder();
+
+        var latlng = new google.maps.LatLng(x, y);
+        var myOptions = {
+            zoom: 15,
+            center: latlng,
+            gestureHandling: 'cooperative',
+            streetViewControl: false,
+            scaleControl: false,    // 지도 축적 보여줄 것인지.
+            //scaleControlOptions: { position: google.maps.ControlPosition.TOP_RIGHT },
+            mapTypeId: google.maps.MapTypeId.ROADMAP  // HYBRID, ROADMAP, SATELLITE, TERRAIN
+        };
+
+        if (navigator.geolocation) {
+             navigator.geolocation.getCurrentPosition(function(position) {
+               var pos = {
+                 lat: position.coords.latitude,
+                 lng: position.coords.longitude
+               };
+               globalMarker = new google.maps.Marker({
+                 map: globalMap,
+                 draggable: false,
+                 animation: google.maps.Animation.BOUNCE,
+                 position: pos
+               });
+
+               globalMarker.addListener('click', toggleBounce);
+               globalMap.setCenter(pos);
+             }, function() {
+               handleLocationError(true, globalMarker, map.getCenter());
+             });
+
+           } else {
+             // Browser doesn't support Geolocation
+             handleLocationError(false, globalMarker, map.getCenter());
+           }
+
+        globalMap = new google.maps.Map(document.getElementById("map_canvas"), myOptions);
+
+
+    }
+
+    function initialize3(x, y) {
+
+
+
+        globalGeocoder = new google.maps.Geocoder();
+
+        var latlng = new google.maps.LatLng(x, y);
+
+        var myOptions = {
+            zoom: 15,
+            center: latlng,
+            gestureHandling: 'cooperative',
+            streetViewControl: false,
+            scaleControl: false,    // 지도 축적 보여줄 것인지.
+            //scaleControlOptions: { position: google.maps.ControlPosition.TOP_RIGHT },
+            mapTypeId: google.maps.MapTypeId.ROADMAP  // HYBRID, ROADMAP, SATELLITE, TERRAIN
+        };
+
+        globalMap = new google.maps.Map(document.getElementById("map_canvas"), myOptions);
+
+
+
+
+        var pos = {
+          lat: x,
+          lng: y
+        };
+          var myOptions2 = {
+              position: pos,
+              draggable: false,
+              map: globalMap,
+              animation: google.maps.Animation.DROP,
+              //icon: "http://sstatic.naver.net/search/img2/ico_bal_a.gif", // 아이콘 설정할 때
+              visible: true
+          };
+
+          globalMarker2 = new google.maps.Marker(myOptions2);
+      //좌표 값을 index.js 에서 가져와야해
+
+
+
+
+
+    }
+
+    function toggleBounce() {
+         if (globalMarker.getAnimation() !== null) {
+           globalMarker.setAnimation(null);
+         } else {
+           globalMarker.setAnimation(google.maps.Animation.BOUNCE);
+         }
+       }
+
+
+       function handleLocationError(browserHasGeolocation, infoWindow, pos) {
+         infoWindow.setPosition(pos);
+         infoWindow.setContent(browserHasGeolocation ?
+                               'Error: The Geolocation service failed.' :
+                               'Error: Your browser doesn\'t support geolocation.');
+       }
+
+
+
+
+    // 맵 검색한 마크찍기
+    function setsearchedMark(){
+      var pos = {
+        lat: 37.5662952,
+        lng: 126.97794509999994//좌표값을 데이터베이스에서 가져와서  for문으로 해주면 될듯 함
+      };
+        var myOptions = {
+            position: pos,
+            draggable: false,
+            map: globalMap,
+            animation: google.maps.Animation.DROP,
+            //icon: "http://sstatic.naver.net/search/img2/ico_bal_a.gif", // 아이콘 설정할 때
+            visible: true
+        };
+
+        globalMarker2 = new google.maps.Marker(myOptions);
+        globalMarker2.addListener('click'/*,여기에 클릭시에 그 모임 정보창으로 넘어가게 */);
+    }
+
+    // 마크 삭제하기
+    function removeMark(){
+        globalMarker.setOptions({
+            map: null,
+            visible: false
+        });
+        globalMarker = null;
+    }
+
+    // 마크좌표 가져오기
+    function getMarkPos(){
+        var pos=globalMarker.getPosition();
+
+        //alert(pos.lat()+"/"+pos.lng());
+        //return {x:pos.lat(), y:pos.lng()};
+
+        document.getElementById("markerX").value = pos.lat();
+        document.getElementById("markerY").value = pos.lng();
+    }
+
+    // 특정좌표로 이동하기
+    function setMapByCoord(x, y){
+        var loc = new google.maps.LatLng(x, y);
+
+        globalMap.setCenter(loc);
+    }
+
+    // 주소값으로 찾기
+    function codeAddress() {
+
+        removeMark();
+        var address = document.getElementById("address").value;
+        if(address=='검색할 주소를 입력하십시오.' || address==''){
+            alert('검색할 주소를 입력하십시오.');
+            document.getElementById("address").value='';
+            document.getElementById("address").focus();
+            return;
+        }
+
+        globalGeocoder.geocode( { 'address': address}, function(results, status) {
+            if (status == google.maps.GeocoderStatus.OK) {
+                globalMap.setCenter(results[0].geometry.location);
+
+
+                //var marker = new google.maps.Marker({
+                globalMarker = new google.maps.Marker({
+                    map: globalMap,
+                    position: results[0].geometry.location,
+                    animation: google.maps.Animation.BOUNCE,
+                    draggable: false
+
+                });
+                globalMarker.addListener('click', toggleBounce);
+
+                var pos=globalMarker.getPosition();
+
+                //alert(pos.lat()+"/"+pos.lng());
+                //return {x:pos.lat(), y:pos.lng()};
+
+                document.getElementById("markerX").value = pos.lat();
+                document.getElementById("markerY").value = pos.lng();
+
+            } else {
+                alert("장소를 입력해주세요~");
+                initialize1(0, 0);
+            }
+        });
+
+    }
+
+    // 정보창 마크 찍기
+
+
+    // 지도 위의 마크 모두 삭제 - Refresh 말고 방법 없을까?
+    function clearMark(){
+        var loc = globalMap.getCenter(); // 현재의 지도의 위치를 가져온다.
+
+        globalMap = null;
+        globalMarker = null;
+        globalGeocoder = null;
+
+        initialize(loc.lat(), loc.lng());
+    }
+
+    // 지도 클릭시 마커 이동
+    function moveMarker(loc){
+        //alert(loc);
+        globalMarker.setPosition(loc);
+    }
+
+    </script>
+  </head>
+  <%var one = rows[0];%>
+  <body  onload="initialize3(<%= one.bulletin_latitude %>,<%= one.bulletin_longitude %>)">
+    <nav class="navbar-default navbar-inverse navbar-custom navbar-fixed-top"><!--네비게이션-->
+    <div class="container-fluid">
+      <div class="navbar-header">
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand" href="/main">모해?모여!</a>
+      </div>
+      <div class="collapse navbar-collapse" id="myNavbar">
+        <ul class="nav navbar-nav">
+          <li><a href="/main">Home</a></li>
+          <li><a href="/imademeeting">내가만든모임</a></li>
+          <li class="active"><a href="/mymeeting">나의모임일정</a></li>
+          <li ><a href="/waitaccept">수락대기모임</a></li>
+          <li><a href="/profilechange">회원정보수정</a></li>
+        </ul>
+        <ul class="nav navbar-nav navbar-right">
+          <li><a href="/logout"><span class="glyphicon glyphicon-log-out"></span> Logout</a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+      <div id="backcolor"><!--타이틀-->
+          <h1 class="text-center text-white text-title"><br><a style="color:#FA6A5C;">모</a>임<a style="color:#FA6A5C;">정</a>보</h1><br>
+
+        </div>
+        <br>
+        <div class=" container-fluid center-block"> <!--내용-->
+            <div class="col-md-2"></div>
+              <div class=" container-fluid col-md-8  " style="margin:1%;">
+                <form>
+                  <div class="col-md-12 col-lg-12 well">
+
+                    <div class="row">
+                      <div class="col-xs-4 col-md-4"></div>
+                      <div class="col-xs-4 col-md-4">
+                        <a href="#">
+                        <div class='square-box well'>
+                          <div class='square-content'style="background-image: url(https://s3.ap-northeast-2.amazonaws.com/likelionsmu/user_img/default.png); background-size:cover;"></div>
+                        </div></a>
+                      </div>
+                      <div class="col-xs-4 col-md-4"></div>
+                      </div>
+                      <hr>
+
+                      <label id="addfontcolor"class="col-sm-3 control-label" for="inputName">모임분류</label>
+                          <% if (one.bulletin_category == 0) { %>
+                            <p>movie / musical / concert</p>
+                          <% } else if (one.bulletin_category == 1) { %>
+                            <p>meal</p>
+                          <% } else if (one.bulletin_category == 2) { %>
+                            <p>sports</p>
+                          <% } else if (one.bulletin_category == 3) { %>
+                            <p>studywork</p>
+                          <% } else if (one.bulletin_category == 4) { %>
+                            <p>hobby</p>
+                          <% } else if (one.bulletin_category == 5) { %>
+                            <p>localvisit</p>
+                          <% } else if (one.bulletin_category == 6) { %>
+                            <p>game</p>
+                          <% } else if (one.bulletin_category == 7) { %>
+                            <p>outsidehobby</p>
+                          <% } else if (one.bulletin_category == 8) { %>
+                            <p>Withinanhour</p>
+                          <% } %>
+                      <hr>
+                      <label id="addfontcolor"class="col-sm-3 control-label" for="inputName">모임제목</label>
+                        <p><%=one.bulletin_title%></p>
+                      <hr>
+                      <label id="addfontcolor"class="col-sm-3 control-label" for="inputName">모임설명</label>
+                        <p><%=one.bulletin_content%></p>
+                      <hr>
+                      <label id="addfontcolor"class="col-sm-3 control-label" for="inputName">현재 인원수</label>
+                        <p><%=one.bulletin_apply_status%></p>
+                      <hr>
+                      <label id="addfontcolor"class="col-sm-3 control-label" for="inputName">날짜</label>
+                        <p><%=one.bulletin_meeting_date%></p>
+                      <hr>
+                      <label id="addfontcolor"class="col-sm-3 control-label" for="inputName">장소</label>
+                    <br><br>
+                     <div id="map_canvas"></div>
+
+                      <hr>
+
+                      <label id="addfontcolor"class="col-sm-3 control-label" >오픈카카오톡</label>
+                      <a href="<%=one.bulletin_openchatting%>"><p><%=one.bulletin_openchatting%></p></a>
+                      <hr>
+                      <label id="addfontcolor"class="col-sm-3 control-label" >참가인원</label>
+                      <br><br>
+                      <!--여기부터는 참가한 사람 숫자대로 이미지를 띄워주면됨-->
+                      <div class="row">
+                        <!--여기부터 한명-->
+                        <%for(var i=0 ; i < appliedList.length ; i++){%>
+                        <div class="col-xs-4 col-md-4">
+                          <a href="#" onclick="b(<%=appliedList[i].user_index%>,<%= content%>);return false;">
+                            <div class='square-box well'>
+                              <div class='square-content'style="background-image: url(<%=appliedList[i].user_img%>); background-size:cover;"></div>
+                            </div>
+                          </a>
+                        </div>
+                        <%}%>
+                        <!--여기까지-->
+                      </div>
+
+                        <hr>
+
+                  <div class="form-group">
+                  <div class="col-sm-12 text-center">
+                      <%var two = rows[0];%>
+                      <a href="/delete/?bulletin_index=<%=two.bulletin_index%>" id="addcolor" class="btn btn-primary" type="submit" onclick="a();">모임취소</button>
+                      <a href="/waitaccept" id="addcolor" class="btn btn-primary" type="submit">뒤로가기</a>
+
+                    </div>
+                  </div>
+                </div>
+
+                </form>
+              </div>
+              <form name="post2">
+                <input type="hidden" name="value1"/>
+                <input type="hidden" name="value2"/>
+              </form>
+
+
+            </div>
+
+            <div id="backcolor">
+              <br>
+              <br>
+              <br>
+           </div>
+
+
+           <script async defer
+                      src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDPpTwfj2gY8s2SLi2mOeWEf3Ytqrx6Cmk&callback=initMap">
+                      </script>
+                <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+              <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+                <!-- Include all compiled plugins (below), or include individual files as needed -->
+              <script src="../javascripts/bootstrap.min.js"></script>
+
+            </body>
+        </html>

@@ -1,0 +1,540 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>모해?모여! 모임을 찾아보자~</title>
+
+
+
+    <link href="../stylesheets/bootstrap.css" rel="stylesheet">
+    <link href="../stylesheets/bootstrap.min.css" rel="stylesheet">
+    <link href="../stylesheets/font-awesome.min.css" rel="stylesheet">
+    <link href="../stylesheets/style.css" rel="stylesheet">
+    <script type="text/javascript">
+    <%var two = rows[0]%>
+
+
+    var StreetViewPanorama = new function(){}
+
+    var globalMap;
+    var globalMarker;
+    var globalMarker2;
+    var globalGeocoder;
+
+    // 맵 초기화
+    function initialize1(x, y) {
+         // 입력된 좌표가 없으면 기본좌표를 역삼동으로 설정.
+        if(x==0){ x=37.5662952; }
+        if(y==0){ y=126.97794509999994; }
+
+        globalGeocoder = new google.maps.Geocoder();
+
+        var latlng = new google.maps.LatLng(x, y);
+
+        var myOptions = {
+            zoom: 15,
+
+            //disableDoubleClickZoom:false,
+            center: latlng,
+
+            navigationControl: false,    // 눈금자 형태로 스케일 조절하는 컨트롤 활성화 선택.
+            navigationControlOptions: {
+                position: google.maps.ControlPosition.TOP_RIGHT,
+                style: google.maps.NavigationControlStyle.DEFAULT // ANDROID, DEFAULT, SMALL, ZOOM_PAN
+            },
+
+            streetViewControl: false,
+
+            scaleControl: false,    // 지도 축적 보여줄 것인지.
+            //scaleControlOptions: { position: google.maps.ControlPosition.TOP_RIGHT },
+
+            mapTypeControl: false, // 지도,위성,하이브리드 등등 선택 컨트롤 보여줄 것인지
+            mapTypeId: google.maps.MapTypeId.ROADMAP  // HYBRID, ROADMAP, SATELLITE, TERRAIN
+        };
+
+        if (navigator.geolocation) {
+             navigator.geolocation.getCurrentPosition(function(position) {
+               var pos = {
+                 lat: position.coords.latitude,
+                 lng: position.coords.longitude
+               };
+               globalMarker = new google.maps.Marker({
+                 map: globalMap,
+                 draggable: true,
+                 animation: google.maps.Animation.BOUNCE,
+                 position: pos
+               });
+
+               globalMarker.addListener('click', toggleBounce);
+               globalMap.setCenter(pos);
+             }, function() {
+               handleLocationError(true, globalMarker, map.getCenter());
+             });
+
+           } else {
+             // Browser doesn't support Geolocation
+             handleLocationError(false, globalMarker, map.getCenter());
+           }
+
+
+
+
+
+        globalMap = new google.maps.Map(document.getElementById("map_canvas"), myOptions);
+
+        google.maps.event.addListener(globalMap, 'dragend', function(){    // 드래그시 이벤트 추가
+            showMapPos();
+            showMapAddr();
+        });
+        google.maps.event.addListener(globalMap, 'click', function(event){        // 지도클릭시 마커이동
+            moveMarker(event.latLng);
+        });
+    }
+
+    function initialize2(x, y) {
+         // 입력된 좌표가 없으면 기본좌표를 역삼동으로 설정.
+        if(x==0){ x=37.5662952; }
+        if(y==0){ y=126.97794509999994; }
+
+        globalGeocoder = new google.maps.Geocoder();
+
+        var latlng = new google.maps.LatLng(x, y);
+
+        var myOptions = {
+            zoom: 15,
+            //disableDoubleClickZoom:false,
+            center: latlng,
+            navigationControl: false,    // 눈금자 형태로 스케일 조절하는 컨트롤 활성화 선택.
+            navigationControlOptions: {
+                position: google.maps.ControlPosition.TOP_RIGHT,
+                style: google.maps.NavigationControlStyle.DEFAULT // ANDROID, DEFAULT, SMALL, ZOOM_PAN
+            },
+
+            streetViewControl: false,
+            scaleControl: false,    // 지도 축적 보여줄 것인지.
+            //scaleControlOptions: { position: google.maps.ControlPosition.TOP_RIGHT },
+            mapTypeControl: false, // 지도,위성,하이브리드 등등 선택 컨트롤 보여줄 것인지
+            mapTypeId: google.maps.MapTypeId.ROADMAP  // HYBRID, ROADMAP, SATELLITE, TERRAIN
+        };
+        if (navigator.geolocation) {
+             navigator.geolocation.getCurrentPosition(function(position) {
+               var pos = {
+                 lat: position.coords.latitude,
+                 lng: position.coords.longitude
+               };
+               globalMarker = new google.maps.Marker({
+                 map: globalMap,
+                 draggable: false,
+                 animation: google.maps.Animation.BOUNCE,
+                 position: pos
+               });
+               globalMarker.addListener('click', toggleBounce);
+               globalMap.setCenter(pos);
+             }, function() {
+               handleLocationError(true, globalMarker, map.getCenter());
+             });
+           } else {
+             // Browser doesn't support Geolocation
+             handleLocationError(false, globalMarker, map.getCenter());
+           }
+        globalMap = new google.maps.Map(document.getElementById("map_canvas"), myOptions);
+    }
+
+    function initialize3(x, y) {
+         // 입력된 좌표가 없으면 기본좌표를 역삼동으로 설정.
+         if(x==0){ x=37.5662952; }
+         if(y==0){ y=126.97794509999994; }
+
+        globalGeocoder = new google.maps.Geocoder();
+
+        var latlng = new google.maps.LatLng(x, y);
+
+        var myOptions = {
+            zoom: 16,
+
+            //disableDoubleClickZoom:false,
+            center: latlng,
+
+            navigationControl: false,    // 눈금자 형태로 스케일 조절하는 컨트롤 활성화 선택.
+            navigationControlOptions: {
+                position: google.maps.ControlPosition.TOP_RIGHT,
+                style: google.maps.NavigationControlStyle.DEFAULT // ANDROID, DEFAULT, SMALL, ZOOM_PAN
+            },
+
+            streetViewControl: false,
+
+            scaleControl: false,    // 지도 축적 보여줄 것인지.
+            //scaleControlOptions: { position: google.maps.ControlPosition.TOP_RIGHT },
+
+            mapTypeControl: false, // 지도,위성,하이브리드 등등 선택 컨트롤 보여줄 것인지
+            mapTypeId: google.maps.MapTypeId.ROADMAP  // HYBRID, ROADMAP, SATELLITE, TERRAIN
+        };
+
+        globalMap = new google.maps.Map(document.getElementById("map_canvas"), myOptions);
+
+        google.maps.event.addListener(globalMap, 'dragend', function(){    // 드래그시 이벤트 추가
+            showMapPos();
+            showMapAddr();
+        });
+        google.maps.event.addListener(globalMap, 'click', function(event){        // 지도클릭시 마커이동
+            moveMarker(event.latLng);
+        });
+        var pos = {
+          lat: 37.5662952,
+          lng: 126.97794509999994
+        };
+          var myOptions2 = {
+              position: pos,
+              draggable: false,
+              map: globalMap,
+              animation: google.maps.Animation.DROP,
+              //icon: "http://sstatic.naver.net/search/img2/ico_bal_a.gif", // 아이콘 설정할 때
+              visible: true
+          };
+
+          globalMarker2 = new google.maps.Marker(myOptions2);
+      //좌표 값을 index.js 에서 가져와야해
+
+
+
+
+
+    }
+
+    function toggleBounce() {
+         if (globalMarker.getAnimation() !== null) {
+           globalMarker.setAnimation(null);
+         } else {
+           globalMarker.setAnimation(google.maps.Animation.BOUNCE);
+         }
+       }
+       function handleLocationError(browserHasGeolocation, infoWindow, pos) {
+         infoWindow.setPosition(pos);
+         infoWindow.setContent(browserHasGeolocation ?
+                               'Error: The Geolocation service failed.' :
+                               'Error: Your browser doesn\'t support geolocation.');
+       }
+
+    // 맵 드래그할 때 맵 중앙 좌표 보여주기
+    function showMapPos(){
+        var pos=globalMap.getCenter();
+        //alert(pos.lat()+"/"+pos.lng());
+        //return {x:pos.lat(), y:pos.lng()};
+        document.getElementById("centerX").value = pos.lat();
+        document.getElementById("centerY").value = pos.lng();
+    }
+
+    // 드래그할 때 맵 중앙 좌표의 주소
+    function showMapAddr(){
+        globalGeocoder.geocode( { 'location': globalMap.getCenter()}, function(results, status) {
+            if (status == google.maps.GeocoderStatus.OK) {
+                /*
+                var str="";
+                for(var i=0; i<results[0].address_components.length; i++){
+                    str += "/"+results[0].address_components[0].long_name
+                }
+                document.getElementById("txtAddress").innerHTML=str;
+
+                document.getElementById("txtAddress").innerHTML=results[0].address_components[0].types;
+                */
+                var str="";
+                for(var i=3; i>=0; i--){
+                    str += " "+results[0].address_components[i].short_name;
+                }
+                document.getElementById("txtAddress").innerHTML=str;
+                //document.getElementById("txtAddress").innerHTML=results[0].address_components[0].long_name;
+            } else {
+                alert("Geocode was not successful for the following reason: " + status);
+            }
+        });
+    }
+
+    // 맵 검색한 마크찍기
+    function setsearchedMark(){
+       // 파일 전송이 필요할 경우만 씀.
+       <% for (var i = 0; i < rows.length; i++) {
+           var one = rows[i];%>
+      var pos = {
+       lat: <%=one.bulletin_latitude%>,//
+         lng: <%=one.bulletin_longitude%>////좌표값을 데이터베이스에서 가져와서  for문으로 해주면 될듯 함
+      };
+
+        var myOptions3 = {
+            position: pos,
+            draggable: false,
+            map: globalMap,
+            animation: google.maps.Animation.DROP,
+            //icon: "http://sstatic.naver.net/search/img2/ico_bal_a.gif", // 아이콘 설정할 때
+            visible: true
+        };
+
+        globalMarker2 = new google.maps.Marker(myOptions3);
+        globalMarker2.addListener('click'/*,여기에 클릭시에 그 모임 정보창으로 넘어가게 */);
+        <%}%>
+    }
+
+    // 마크 삭제하기
+    function removeMark(){
+        globalMarker.setOptions({
+            map: null,
+            visible: false
+        });
+        globalMarker = null;
+    }
+
+    // 마크좌표 가져오기
+    function getMarkPos(){
+        var pos=globalMarker.getPosition();
+
+        //alert(pos.lat()+"/"+pos.lng());
+        //return {x:pos.lat(), y:pos.lng()};
+
+        document.getElementById("markerX").value = pos.lat();
+        document.getElementById("markerY").value = pos.lng();
+    }
+
+    // 특정좌표로 이동하기
+    function setMapByCoord(x, y){
+        var loc = new google.maps.LatLng(x, y);
+
+        globalMap.setCenter(loc);
+    }
+
+    // 주소값으로 찾기
+    function codeAddress() {
+        removeMark();
+        var address = document.getElementById("address").value;
+        if(address=='검색할 주소를 입력하십시오.' || address==''){
+            alert('검색할 주소를 입력하십시오.');
+            document.getElementById("address").value='';
+            document.getElementById("address").focus();
+            return;
+        }
+
+        globalGeocoder.geocode( { 'address': address}, function(results, status) {
+            if (status == google.maps.GeocoderStatus.OK) {
+                globalMap.setCenter(results[0].geometry.location);
+
+
+                //var marker = new google.maps.Marker({
+                globalMarker = new google.maps.Marker({
+                    map: globalMap,
+                    position: results[0].geometry.location,
+                    animation: google.maps.Animation.DROP,
+                    draggable: true
+
+                });
+                globalMarker.addListener('click', toggleBounce);
+            } else {
+                alert("Geocode was not successful for the following reason: " + status);
+            }
+        });
+    }
+
+    // 정보창 마크 찍기
+
+
+    // 지도 위의 마크 모두 삭제 - Refresh 말고 방법 없을까?
+    function clearMark(){
+        var loc = globalMap.getCenter(); // 현재의 지도의 위치를 가져온다.
+
+        globalMap = null;
+        globalMarker = null;
+        globalGeocoder = null;
+        initialize(loc.lat(), loc.lng());
+
+    }
+
+    // 지도 클릭시 마커 이동
+    function moveMarker(loc){
+        //alert(loc);
+        globalMarker.setPosition(loc);
+    }
+
+    function ab(){
+       if(<%=success%>==1){
+
+         initialize2(0, 0)
+        setsearchedMark();
+
+       }else{
+         initialize2(0, 0)
+       }
+     }
+
+    </script>
+  </head>
+  <body onload="ab()" >
+
+    <nav class="navbar-default navbar-inverse navbar-custom navbar-fixed-top"><!--네비게이션-->
+    <div class="container-fluid">
+      <div class="navbar-header">
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand" href="#">모해?모여!</a>
+      </div>
+      <div class="collapse navbar-collapse" id="myNavbar">
+        <ul class="nav navbar-nav">
+          <li><a href="/main">Home</a></li>
+          <li><a href="/imademeeting">내가만든모임</a></li>
+          <li><a href="/mymetting">나의모임일정</a></li>
+          <li ><a href="#">수락대기모임</a></li>
+          <li><a href="/profilechange">회원정보수정</a></li>
+        </ul>
+        <ul class="nav navbar-nav navbar-right">
+          <li><a href="#"><span class="glyphicon glyphicon-log-out"></span> Logout</a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+      <div id="backcolor"><!--타이틀-->
+        <h1 class="text-center text-white text-title"  ><br><p id="cate"></p></h1></br>
+        <script>
+        var arr=["영화","식사","스포츠","스터디","취미생활","지역탐방","게임","야외활동","번개"]
+
+        <%
+        if(rows.length==0){
+          var two = ca[0];
+        }else{
+           var two=rows[0]
+         }
+        %>
+
+
+        for(var i=0;i<8;i++){
+          if(i==<%=two.bulletin_category%>){
+            document.getElementById("cate").innerHTML = arr[i];
+          }
+        }
+          </script>
+        </div>
+        <br>
+        <div class=" container-fluid center-block"> <!--내용-->
+            <div class="col-md-2"></div>
+              <div class=" container-fluid col-md-8  " style="margin:1%;">
+
+                                <%
+                                if(rows.length==0){
+                                  var one = ca[0];
+                                }else{
+                                   var one=rows[0]
+                                 }
+                                %>
+                  <form class="form-horizontal well" method = "post" action="/search">
+                    <input type="hidden" value="<%=one.bulletin_category%>" name="bulletin_category">
+
+                    <div class="row">
+                      <div class="col-xs-4 col-md-4"></div>
+                      <div class="col-xs-4 col-md-4">
+                        <div class='square-box thumbnail'>
+                          <a href="#"><div class='square-content bg1'></div></a>
+                        </div>
+                      </div>
+                        <div class="col-xs-4 col-md-4"></div>
+                      </div>
+                  <div class="form-group">
+                    <label id="addfontcolor"class="col-sm-3 control-label" for="inputnumber">인원수 (이하)</label>
+                    <div class="col-sm-6">
+                     <select class="form-control" id="inputSex" name="bulletin_apply_limit">
+                       <option value="3">2</option>
+                         <option value="3">3</option>
+                         <option value="4">4</option>
+                         <option value="5">5</option>
+                         <option value="6">6</option>
+                         <option value="7">7</option>
+                         <option value="8">8</option>
+                         <option value="9">9</option>
+                         <option value="10">10</option>
+                         <option value="11">11</option>
+                         <option value="12">12</option>
+                         <option value="13">13</option>
+                         <option value="14">14</option>
+                         <option value="15">15</option>
+                         <option value="16">16</option>
+                         <option value="17">17</option>
+                         <option value="18">18</option>
+                         <option value="19">19</option>
+                         <option value="20">20</option>
+                         <option value="21">21</option>
+                         <option value="22">22</option>
+                     </select>
+                   </div>
+                 </div>
+                 <div class="form-group">
+                   <label id="addfontcolor"class="col-sm-3 control-label" for="inputdate">날짜</label>
+                   <div class="col-sm-6">
+                      <input type="date" name="bulletin_meeting_date" value="">
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <label id="addfontcolor"class="col-sm-3 control-label" for="inputdate">장소</label>
+                  <div class="col-sm-6">
+                     <input type="text" name="bulletin_place" value="">
+                 </div>
+               </div>
+                <br>
+                  <div class="form-group">
+                    <div class="col-sm-12 text-center">
+                      <button id="addcolor" class="btn btn-primary" >검색</i></a>
+
+                    </div>
+                  </div>
+                  </form>
+
+                  <hr>
+                  <div id="map_canvas"></div>
+
+                  <hr>
+
+                  <div class=" container-fluid center-block">
+                    <% for (var i = 0; i < rows.length; i++) {
+                        var one = rows[i];%>
+                        <div class=" container-fluid  well contentsbox" style="margin:1%;">
+                          <a href="/confirmmeeting/<%=one.bulletin_index%>">
+                            <div class=" col-xs-4 col-lg-4 ">
+                              <div class='square-box well'style="margin-top:20px;">
+                                  <div class='square-content'style="background-image: url(https://s3.ap-northeast-2.amazonaws.com/likelionsmu/user_img/default.png); background-size:cover;"></div>
+                              </div>
+                            </div>
+                            <div class="col-xs-8 col-md-8 text-white">
+                              <p style="text-align:center"><%=one.bulletin_title%></p>
+                              <p style="text-align:center"><%=one.bulletin_meeting_date%></p>
+                              <p style="text-align:center"><%=one.bulletin_status%></p>
+                              <p style="text-align:center"><%=one.bulletin_title%></p>
+                            </div>
+                            </a>
+                          </div>
+                          <div class="col-md-2"></div>
+
+                          <% } %>
+                        </div>
+              </div>
+
+            </div>
+            <br>
+            <div id="backcolor">
+              <br>
+              <br>
+              <br>
+           </div>
+
+
+
+
+           <script async defer
+           src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDPpTwfj2gY8s2SLi2mOeWEf3Ytqrx6Cmk&callback=initMap">
+           </script>
+            <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+            <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+            <!-- Include all compiled plugins (below), or include individual files as needed -->
+            <script src="../javascripts/bootstrap.min.js"></script>
+          </body>
+</html>

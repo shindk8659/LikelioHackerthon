@@ -1,0 +1,24 @@
+{
+  "name": "web",
+  "version": "0.0.0",
+  "private": true,
+  "scripts": {
+    "start": "node ./bin/www"
+  },
+  "dependencies": {
+    "body-parser": "~1.17.1",
+    "bootstrap": "^3.3.7",
+    "cookie-parser": "~1.4.3",
+    "debug": "^2.6.8",
+    "ejs": "~2.5.6",
+    "express": "^4.15.4",
+    "express-session": "^1.15.5",
+    "load": "^1.0.2",
+    "module": "^1.2.5",
+    "morgan": "~1.8.1",
+    "resolve": "^1.4.0",
+    "run": "^1.4.0",
+    "serve-favicon": "~2.4.2",
+    "supervisor": "^0.12.0"
+  }
+}
